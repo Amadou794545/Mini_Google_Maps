@@ -1,0 +1,169 @@
+# 🗺️ Mini Google Maps avec IA — Toulouse
+
+> Reproduction simplifiée de Google Maps avec un moteur d'itinéraire et une prédiction de trafic par Intelligence Artificielle.
+
+---
+
+## 📌 Présentation du projet
+
+Ce projet a pour objectif de comprendre et reproduire le fonctionnement de Google Maps de A à Z, en combinant cartographie, algorithmique des graphes, machine learning et développement web.
+
+Il repose sur les données réelles d'OpenStreetMap et calcule des itinéraires optimaux sur le réseau routier de Toulouse, en estimant le temps de trajet grâce à un modèle d'IA selon l'heure de la journée.
+
+---
+
+## 🎯 Fonctionnalités
+
+- 🗺️ Affichage du réseau routier réel de Toulouse
+- 🧭 Calcul du chemin le plus court entre deux points (algorithme de Dijkstra)
+- 🧠 Prédiction du temps de trajet par IA selon l'heure choisie
+- 🟢🟠🔴 Colorisation de l'itinéraire selon le niveau de trafic
+- 📊 Graphique du trafic sur 24h avec position en temps réel
+- 🕐 Détection automatique de l'heure actuelle
+- 🌐 Interface web interactive (choix du départ, de l'arrivée et de l'heure)
+- 📍 10 lieux de Toulouse disponibles
+
+---
+
+## 🛠️ Stack technique
+
+| Rôle | Outil |
+|------|-------|
+| Langage principal | Python |
+| Données cartographiques | OSMnx + OpenStreetMap |
+| Calcul d'itinéraire | NetworkX (Dijkstra) |
+| Modèle IA | Scikit-learn (Régression linéaire) |
+| Carte interactive | Folium |
+| Interface web | Flask |
+| Graphiques | Matplotlib |
+
+---
+
+## 📁 Structure du projet
+
+```
+Mini_Google_Maps/
+│
+├── phase1.py          # Téléchargement et affichage de la carte
+├── phase2.py          # Calcul d'itinéraire A → B
+├── phase3.py          # Prédiction du trafic par IA
+├── phase4.py          # Interface web interactive (v1)
+├── phase5.py          # Version finale complète ✅
+│
+├── toulouse_map.html          # Carte générée (phase 1)
+├── toulouse_itineraire.html   # Itinéraire généré (phase 2)
+├── toulouse_ia.html           # Carte avec IA (phase 3)
+│
+└── README.md
+```
+
+---
+
+## ⚙️ Installation
+
+### 1. Cloner le projet
+
+```bash
+git clone https://github.com/ton-username/mini-google-maps-ia.git
+cd mini-google-maps-ia
+```
+
+### 2. Créer un environnement virtuel (recommandé)
+
+```bash
+python -m venv venv
+venv\Scripts\activate        # Windows
+source venv/bin/activate     # Mac / Linux
+```
+
+### 3. Installer les dépendances
+
+```bash
+pip install osmnx networkx folium scikit-learn flask matplotlib
+```
+
+---
+
+## 🚀 Lancer l'application
+
+```bash
+python phase5.py
+```
+
+Puis ouvre ton navigateur sur :
+
+```
+http://127.0.0.1:5000
+```
+
+> ⚠️ Le premier chargement prend 1 à 2 minutes le temps de télécharger le réseau routier de Toulouse depuis OpenStreetMap.
+
+---
+
+## 🧠 Comment fonctionne l'IA ?
+
+Le modèle de régression linéaire est entraîné sur un dataset de trafic simulé heure par heure :
+
+| Heure | Multiplicateur | État |
+|-------|---------------|------|
+| 8h | x2.5 | 🔴 Rush hour matin |
+| 14h | x1.2 | 🟢 Trafic fluide |
+| 18h | x2.4 | 🔴 Rush hour soir |
+| 3h | x1.0 | 🟢 Nuit calme |
+
+Le temps de trajet est ensuite calculé ainsi :
+
+```
+Vitesse réelle = Vitesse normale (40 km/h) / Multiplicateur
+Temps (min)    = (Distance km / Vitesse réelle) × 60
+```
+
+---
+
+## 🗺️ Lieux disponibles
+
+- Capitole
+- Aéroport de Toulouse-Blagnac
+- Université Paul Sabatier
+- Gare Matabiau
+- Cité de l'Espace
+- Stade Toulousain
+- CHU Purpan
+- Blagnac Centre
+- Saint-Cyprien
+- Rangueil
+
+---
+
+## 📈 Phases du projet
+
+| Phase | Description | Fichier |
+|-------|-------------|---------|
+| Phase 1 | Téléchargement et affichage de la carte | `phase1.py` |
+| Phase 2 | Calcul d'itinéraire (Dijkstra) | `phase2.py` |
+| Phase 3 | Prédiction IA du trafic | `phase3.py` |
+| Phase 4 | Interface web Flask (v1) | `phase4.py` |
+| Phase 5 | Version finale complète | `phase5.py` |
+
+---
+
+## 🔮 Améliorations possibles
+
+- Intégrer de vraies données trafic (API TomTom ou Uber Movement)
+- Ajouter le mode vélo / piéton / transports en commun
+- Utiliser un modèle IA plus avancé (Random Forest, LSTM)
+- Déployer l'application en ligne (Heroku, Render, Railway)
+- Ajouter la géolocalisation automatique de l'utilisateur
+- Proposer plusieurs itinéraires alternatifs
+
+---
+
+## 👤 Auteur Amadou MBODJgo
+
+Projet réalisé dans le cadre d'un apprentissage personnel en Data Science et Intelligence Artificielle.
+
+---
+
+## 📄 Licence
+
+Ce projet est open source et utilise les données d'[OpenStreetMap](https://www.openstreetmap.org/) sous licence [ODbL](https://opendatacommons.org/licenses/odbl/).
